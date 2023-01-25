@@ -564,10 +564,6 @@ btnEnviar.addEventListener("submit", new filtrarGastosWeb());
 async function cargarGastosAPI()
 {
 
-    this.handleEvent = function(event)
-    {
-
-        event.preventDefault();
 
         let username = document.getElementById("nombre_usuario").value;
 
@@ -576,7 +572,7 @@ async function cargarGastosAPI()
         if(username != '')
         {
 
-            await fetch(url, {method: 'GET'}).then(response => response.json()).then(function(gastos)
+            await fetch(enlace, {method: 'GET'}).then(response => response.json()).then(function(gastos)
             {
 
                 gesPresupuesto.cargarGastos(gastos);
@@ -585,13 +581,22 @@ async function cargarGastosAPI()
 
             })
 
-            .catch(error => {console.log})
+            .catch(error => {console.log(error);
+
+            });
+
+        }
+
+        else
+        {
+
+            alert('Introduce un nombre de usuario');
 
         }
 
     }
 
-}
+
 
 
 export{
