@@ -561,6 +561,14 @@ let btnEnviar = document.getElementById("formulario-filtrado");
 btnEnviar.addEventListener("submit", new filtrarGastosWeb());
 
 
+function cargarGastosAPI()
+{
+
+
+
+}
+
+
 export{
 
     mostrarDatoEnId,
@@ -579,6 +587,7 @@ export{
     EnviarHandle,
     filtrarGastosWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosAPI
 
 }
