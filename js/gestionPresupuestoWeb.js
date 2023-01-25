@@ -561,10 +561,19 @@ let btnEnviar = document.getElementById("formulario-filtrado");
 btnEnviar.addEventListener("submit", new filtrarGastosWeb());
 
 
-function cargarGastosAPI()
+async function cargarGastosAPI()
 {
 
+    this.handleEvent = function(event)
+    {
 
+        event.preventDefault();
+
+        let username = document.getElementById("nombre_usuario").value;
+
+        let enlace = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/';
+
+    }
 
 }
 
