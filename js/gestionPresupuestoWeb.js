@@ -571,7 +571,23 @@ async function cargarGastosAPI()
 
         let username = document.getElementById("nombre_usuario").value;
 
-        let enlace = 'https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/';
+        let enlace = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}`;
+
+        if(username != '')
+        {
+
+            await fetch(url, {method: 'GET'}).then(response => response.json()).then(function(gastos)
+            {
+
+                gesPresupuesto.cargarGastos(gastos);
+
+                repintar();
+
+            })
+
+            .catch(error => {console.log})
+
+        }
 
     }
 
