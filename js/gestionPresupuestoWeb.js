@@ -561,7 +561,7 @@ let btnEnviar = document.getElementById("formulario-filtrado");
 btnEnviar.addEventListener("submit", new filtrarGastosWeb());
 
 
-async function cargarGastosAPI()
+function cargarGastosAPI()
 {
 
 
@@ -572,7 +572,7 @@ async function cargarGastosAPI()
         if(username != '')
         {
 
-            await fetch(enlace, {method: 'GET'}).then(response => response.json()).then(function(gastos)
+             fetch(enlace, {method: 'GET'}).then(response => response.json()).then(function(gastos)
             {
 
                 gesPresupuesto.cargarGastos(gastos);
@@ -586,17 +586,18 @@ async function cargarGastosAPI()
             });
 
         }
-
         else
         {
 
-            alert('Introduce un nombre de usuario');
+            console.log("error, no se han podido cargar los gastos")
 
         }
 
     }
 
+let btnCArgarApi = document.getElementById("cargar-gastos-api");
 
+btnCArgarApi.addEventListener("click", cargarGastosAPI);
 
 
 export{
