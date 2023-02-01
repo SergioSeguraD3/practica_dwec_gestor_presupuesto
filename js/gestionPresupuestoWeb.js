@@ -327,9 +327,9 @@ function nuevoGastoWebFormulario(){
         formulario.addEventListener('submit',enviar);
 
 
-        let enviarApi = new enviarGastosAPI();
+        let enviarApi = formulario.querySelector("button.gasto-enviar-api");
 
-        formulario.addEventListener('submit', enviarApi);
+        enviarApi.addEventListener('click', new enviarGastosAPI());
 
 };
 
@@ -635,7 +635,38 @@ function cargarGastosAPI()
 
             evento.preventDefault();
 
+            let nombreUsuario = document.getElementById("nombre_usuario").value;
 
+            let enlace = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`, {method:'POST'})
+            .then (respuesta =>{
+
+                if(username != '')
+                {
+
+                    let formulario = document.querySelector('#controlesprincipales form');
+                   
+                    let descripcion = formulario.elements.descripcion.value;
+                   
+                    let valor = parseFloat(formulario.elements.valor.value);
+                   
+                    let fecha = formulario.elements.fecha.value;
+                   
+                    let etiquetas = formulario.elements.etiquetas.value.split(',');
+
+                    let gasto = 
+                    {
+                        descripcion: descripcion,
+                   
+                        valor: valor,
+                   
+                        fecha: fecha,
+                   
+                        etiquetas: etiquetas,
+                   
+                    }
+                
+                
+            })
 
         }
 
