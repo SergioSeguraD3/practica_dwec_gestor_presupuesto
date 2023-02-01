@@ -553,34 +553,8 @@ function cargarGastosWeb()
 
 }
 
-let btnGuardar = document.getElementById('guardar-gastos');
-
-btnGuardar.addEventListener("click", new guardarGastosWeb);
-
-
-let btnCargar = document.getElementById('cargar-gastos');
-
-btnCargar.addEventListener("click", new cargarGastosWeb);
-
-
-actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
-
-anyadirgasto.addEventListener("click", nuevoGastoWeb);
-
-
-let addGastoForm = document.getElementById("anyadirgasto-formulario");
-
-addGastoForm.addEventListener("click", nuevoGastoWebFormulario);
-
-
-let btnEnviar = document.getElementById("formulario-filtrado");
-
-btnEnviar.addEventListener("submit", new filtrarGastosWeb());
-
-
 function cargarGastosAPI()
 {
-
 
         let username = document.getElementById("nombre_usuario").value;
 
@@ -606,70 +580,78 @@ function cargarGastosAPI()
         else
         {
 
-            console.log("error, no se han podido cargar los gastos")
+            console.log("error, no se han podido cargar los gastos");
 
         }
 
     }
+
+    function borrarGastosAPI()
+    {
+    
+        this.handleEvent = function(evento)
+        {
+
+            evento.preventDefault();
+
+            let nombreUsuario = document.getElementById("nombre_usuario").value;
+
+            let enlace = (`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`, {method:'DELETE'})
+            
+            .then (respuesta => {
+
+                if(respuesta.ok)
+                {
+
+                    console.log('Gasto eliminado correctamente');
+
+                    cargarGastosAPI();
+
+                }
+                else
+                {
+
+                    console.log('el gasto no ha podido ser borrado correctamente');
+
+                }
+
+            })
+
+        }
+    
+    }      
+    
+
+
+let btnGuardar = document.getElementById('guardar-gastos');
+
+btnGuardar.addEventListener("click", new guardarGastosWeb);
+
+
+let btnCargar = document.getElementById('cargar-gastos');
+
+btnCargar.addEventListener("click", new cargarGastosWeb);
+
+
+actualizarpresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
+anyadirgasto.addEventListener("click", nuevoGastoWeb);
+
+
+let addGastoForm = document.getElementById("anyadirgasto-formulario");
+
+addGastoForm.addEventListener("click", nuevoGastoWebFormulario);
+
+
+let btnEnviar = document.getElementById("formulario-filtrado");
+
+btnEnviar.addEventListener("submit", new filtrarGastosWeb());
 
 //boton cargarAPI
 
 let btnCArgarApi = document.getElementById("cargar-gastos-api");
 
 btnCArgarApi.addEventListener("click", cargarGastosAPI);
-
-
-function borrarGastosAPI()
-{
-
-    this.handleEvent = async function(evento)
-    {
-
-        let username = document.getElementById("nombre_usuario").value;
-
-        let enlace = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.id}`;
-
-
-        try
-        {
-
-            if(username != '')
-            {
-
-                let eliminar = await fetch(enlace, {method: 'DELETE'});
-
-                if(eliminar.ok)
-                {
-
-                    cargarGastosAPI();
-
-                    console.log("Se ha borrado el gasto correctamente.")
-
-                }
-
-            }
-
-            else
-            {
-
-                console.log("error");
-
-            }
-
-        }
-
-        catch(error)
-        {
-
-            console.log(error);
-
-        }
-    }
-
-}      
-
-
-
 
 export{
 
