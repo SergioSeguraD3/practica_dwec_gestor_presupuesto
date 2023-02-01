@@ -637,8 +637,7 @@ function cargarGastosAPI()
 
             let nombreUsuario = document.getElementById("nombre_usuario").value;
 
-            let enlace = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`, {method:'POST'})
-            .then (respuesta =>{
+            let enlace = fetch `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
 
                 if(username != '')
                 {
@@ -665,12 +664,23 @@ function cargarGastosAPI()
                    
                     }
                 
-                
-            })
+                    fetch(enlace, {method: 'POST', body: JSON.stringify(gasto), headers: {'content-type': 'application/json; charset=utf-8'}})
+                    .then
+                    (function(respuesta){
+
+                        if(respuesta.ok)
+                        {
+
+                            console.log('gasto enviado correctamente');
+                            
+                        }
+
+                    })
+            }
 
         }
 
-    }
+        }
 
 
 let btnGuardar = document.getElementById('guardar-gastos');
