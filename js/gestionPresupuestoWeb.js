@@ -20,10 +20,10 @@ function mostrarGastoWeb(idElemento, gasto)
     let divGasto = document.createElement('div');
 
     divGasto.className = "gasto";
+    
     let divDescripcionPorGasto = document.createElement('div');
     divDescripcionPorGasto.className = "gasto-descripcion";
-
-    divDescripcionPorGasto.innerHTML+=gasto.descricpion;
+    divDescripcionPorGasto.innerHTML += gasto.descricpion;
     divGasto.append(divDescripcionPorGasto);
 
     let divFechaPorGasto = document.createElement('div');
@@ -633,11 +633,9 @@ function cargarGastosAPI()
         this.handleEvent = function(evento)
         {
 
-            evento.preventDefault();
+            let username = document.getElementById("nombre_usuario").value;
 
-            let nombreUsuario = document.getElementById("nombre_usuario").value;
-
-            let enlace = fetch `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+            let enlace = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}`);
 
                 if(username != '')
                 {
@@ -664,7 +662,7 @@ function cargarGastosAPI()
                    
                     }
                 
-                    fetch(enlace, {method: 'POST', body: JSON.stringify(gasto), headers: {'content-type': 'application/json; charset=utf-8'}})
+                    fetch(enlace, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
                     .then
                     (function(respuesta){
 
@@ -672,15 +670,28 @@ function cargarGastosAPI()
                         {
 
                             console.log('gasto enviado correctamente');
-                            
+                            cargarGastosAPI();
+
                         }
+                        else
+                        {
 
+                            console.log('error, el gasto no ha podido ser enviado correctamente');
+
+                        }
                     })
-            }
 
-        }
+                        .catch(errors => alert(errors));
 
+                }
+                    else
+                    {
+
+                        console.log('introduce un nombre en la api por favor');
+
+                    }
         }
+    };
 
 
 let btnGuardar = document.getElementById('guardar-gastos');
