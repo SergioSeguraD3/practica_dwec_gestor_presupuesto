@@ -326,6 +326,11 @@ function nuevoGastoWebFormulario(){
         
         formulario.addEventListener('submit',enviar);
 
+
+        let enviarApi = new enviarGastosAPI();
+
+        formulario.addEventListener('submit', enviarApi);
+
 };
 
 function btnCancelarHandle()
@@ -596,7 +601,7 @@ function cargarGastosAPI()
 
             let nombreUsuario = document.getElementById("nombre_usuario").value;
 
-            let enlace = (`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`, {method:'DELETE'})
+            let enlace = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.gasto.gastoId}`, {method:'DELETE'})
             
             .then (respuesta => {
 
@@ -621,6 +626,20 @@ function cargarGastosAPI()
     
     }      
     
+
+    function enviarGastosAPI()
+    {
+
+        this.handleEvent = function(evento)
+        {
+
+            evento.preventDefault();
+
+
+
+        }
+
+    }
 
 
 let btnGuardar = document.getElementById('guardar-gastos');
