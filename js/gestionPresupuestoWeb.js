@@ -629,69 +629,76 @@ function cargarGastosAPI()
 
     function enviarGastosAPI()
     {
+       this.handleEvent = function(evento)
+       {
+ 
+            let userName = document.getElementById("nombre_usuario").value;
+            
+            let url =  `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${userName}`;
+      
+    
+            if(userName != '')
+            {
+      
+                let formulario = document.querySelector('#controlesprincipales form');
+      
+                let descripcion = formulario.elements.descripcion.value;
+      
+                let valor = parseFloat(formulario.elements.valor.value);
+      
+                let fecha = formulario.elements.fecha.value;
+      
+                let etiquetas = formulario.elements.etiquetas.value.split(',');
+    
 
-        this.handleEvent = function(evento)
-        {
-
-            let username = document.getElementById("nombre_usuario").value;
-
-            let enlace = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}`);
-
-                if(username != '')
-                {
-
-                    let formulario = document.querySelector('#controlesprincipales form');
-                   
-                    let descripcion = formulario.elements.descripcion.value;
-                   
-                    let valor = parseFloat(formulario.elements.valor.value);
-                   
-                    let fecha = formulario.elements.fecha.value;
-                   
-                    let etiquetas = formulario.elements.etiquetas.value.split(',');
-
-                    let gasto = 
-                    {
-                        descripcion: descripcion,
-                   
-                        valor: valor,
-                   
-                        fecha: fecha,
-                   
-                        etiquetas: etiquetas,
-                   
-                    }
-                
-                    fetch(enlace, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
-                    .then
-                    (function(respuesta){
-
-                        if(respuesta.ok)
-                        {
-
-                            console.log('gasto enviado correctamente');
-                            cargarGastosAPI();
-
-                        }
-                        else
-                        {
-
-                            console.log('error, el gasto no ha podido ser enviado correctamente');
-
-                        }
-                    })
-
-                        .catch(errors => alert(errors));
-
+            let gasto = 
+            {
+            
+                descripcion: descripcion,
+            
+                valor: valor,
+            
+                fecha: fecha,
+            
+                etiquetas: etiquetas,
+            
+            }
+            
+            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+            .then(function(respuesta)
+            {
+            
+                if(respuesta.ok
+                    ){
+            
+                    console.log('Gasto creado correctamente.')  
+            
+                    cargarGastosAPI();
+            
                 }
-                    else
-                    {
-
-                        console.log('introduce un nombre en la api por favor');
-
-                    }
+            
+                else
+                {
+            
+                    console.log('Error, no se ha odido cargar el gasto');
+            
+                }   
+            
+            })
+            
+            .catch(errors => alert(errors));
         }
-    };
+
+        
+        else{
+        
+            console.log('intoduce un nombre en la API por favor');
+        
+        }
+    }
+
+    
+};
 
 
 let btnGuardar = document.getElementById('guardar-gastos');
