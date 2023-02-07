@@ -511,6 +511,16 @@ function EditarHandleFormulario()
         formularios.addEventListener('submit',enviar);
 
         btnFormulario.setAttribute('disabled', "");
+
+
+        let editarAPI = new EditarHandleApi();
+
+        editarAPI.gasto = this.gasto;
+
+        formularios.querySelector("button.gasto-enviar-api");
+        
+        formularios.addEventListener('click',editarAPI);
+        
     }
 
 }
@@ -700,6 +710,69 @@ function cargarGastosAPI()
     
 };
 
+function EditarHandleApi(){
+ 
+    this.handleEvent =   function(event){
+ 
+        let username = document.getElementById("nombre_usuario").value;
+ 
+        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
+
+        if (username != ''){
+ 
+            let formulario = event.currentTarget.form;
+ 
+            let descripcion = formulario.elements.descripcion.value;
+ 
+            let valor = parseFloat(formulario.elements.valor.value);
+ 
+            let fecha = formulario.elements.fecha.value;
+ 
+            let etiquetas = formulario.elements.etiquetas.value.split(',');
+
+            let gasto = 
+            {
+ 
+                descripcion: descripcion,
+ 
+                valor: valor,
+ 
+                fecha: fecha,
+ 
+                etiquetas: etiquetas
+ 
+            };
+      
+             fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+             .then(function(respuesta)
+             {
+
+                if(respuesta.ok)
+                {
+
+                    console.log('Gasto editado correctamente');
+                     cargarGastosApi();
+
+                }
+                else
+                {
+
+                    console.log('Error, no se ha podido editar correctamente');
+
+                }   
+            })
+
+            .catch(errors => alert(errors));
+
+        }
+        else
+        {
+
+            console.log('Introduzca un nombre por favor');
+
+        }
+    }
+}
 
 let btnGuardar = document.getElementById('guardar-gastos');
 
@@ -751,6 +824,7 @@ export{
     guardarGastosWeb,
     cargarGastosWeb,
     cargarGastosAPI,
-    borrarGastosAPI
+    borrarGastosAPI,
+    EditarHandleApi
 
 }
