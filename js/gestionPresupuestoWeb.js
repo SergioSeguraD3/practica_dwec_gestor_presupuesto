@@ -513,11 +513,11 @@ function EditarHandleFormulario()
         btnFormulario.setAttribute('disabled', "");
 
 
-        let editarAPI = new EditarHandleApi();
+        let editarAPI = new EditarGastoAPI();
 
         editarAPI.gasto = this.gasto;
 
-        formularios.querySelector("button.gasto-enviar-api");
+        formularios.querySelector("button.gasto-editar-api");
         
         formularios.addEventListener('click',editarAPI);
         
@@ -674,43 +674,12 @@ function cargarGastosAPI()
             
             }
             
-            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
-            .then(function(respuesta)
-            {
-            
-                if(respuesta.ok
-                    ){
-            
-                    console.log('Gasto creado correctamente.')  
-            
-                    cargarGastosAPI();
-            
-                }
-            
-                else
-                {
-            
-                    console.log('Error, no se ha odido cargar el gasto');
-            
-                }   
-            
-            })
-            
-            .catch(errors => alert(errors));
-        }
 
-        
-        else{
-        
-            console.log('intoduce un nombre en la API por favor');
-        
-        }
-    }
 
     
 };
 
-function EditarHandleApi(){
+function EditarGastoAPI(){
  
     this.handleEvent =   function(event){
  
@@ -734,7 +703,7 @@ function EditarHandleApi(){
             let gasto = 
             {
  
-                descripcion: descripcion,
+                desc: descripcion,
  
                 valor: valor,
  
@@ -776,6 +745,8 @@ function EditarHandleApi(){
     }
 }
 
+//Botones
+
 let btnGuardar = document.getElementById('guardar-gastos');
 
 btnGuardar.addEventListener("click", new guardarGastosWeb);
@@ -800,7 +771,6 @@ let btnEnviar = document.getElementById("formulario-filtrado");
 
 btnEnviar.addEventListener("submit", new filtrarGastosWeb());
 
-//boton cargarAPI
 
 let btnCArgarApi = document.getElementById("cargar-gastos-api");
 
@@ -827,6 +797,6 @@ export{
     cargarGastosWeb,
     cargarGastosAPI,
     borrarGastosAPI,
-    EditarHandleApi
+    EditarGastoAPI
 
 }
