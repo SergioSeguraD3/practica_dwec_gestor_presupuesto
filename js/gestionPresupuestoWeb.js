@@ -674,76 +674,99 @@ function cargarGastosAPI()
             
             }
             
+            fetch(url, {method: 'POST', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
+            .then(function(respuesta)
+            {
+            
+                if(respuesta.ok
+                    ){
+            
+                    console.log('Gasto creado correctamente.')  
+            
+                    cargarGastosAPI();
+            
+                }
+            
+                else
+                {
+            
+                    console.log('Error, no se ha odido cargar el gasto');
+            
+                }   
+            
+            })
+            
+            .catch(errors => alert(errors));
+        }
 
+        
+        else{
+        
+            console.log('intoduce un nombre en la API por favor');
+        
+        }
+    }
 
     
 };
 
-function EditarGastoAPI(){
- 
-    this.handleEvent =   function(event){
- 
-        let username = document.getElementById("nombre_usuario").value;
- 
-        let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
+function EditarGastoAPI()
+{
 
-        if (username != '')
-        {
- 
-            let formulario = event.currentTarget.form;
- 
-            let descripcion = formulario.elements.descripcion.value;
- 
-            let valor = parseFloat(formulario.elements.valor.value);
- 
-            let fecha = formulario.elements.fecha.value;
- 
-            let etiquetas = formulario.elements.etiquetas.value.split(',');
+    this.handleEvent = function(event)
+    {
 
-            let gasto = 
-            {
- 
-                desc: descripcion,
- 
-                valor: valor,
- 
-                fecha: fecha,
- 
-                etiquetas: etiquetas
- 
-            };
+        event.preventDefault();
+
+
+      let nombre = document.getElementById("nombre_usuario").value;
+
+      let formulario = event.currentTarget.form;
+
+      let descripcion = formulario.elements.descripcion.value;
+
+      let valor = parseFloat(formulario.elements.valor.value);
+
+      let fecha = formulario.elements.fecha.value;
+
+      let etiquetas = formulario.elements.etiquetas.value.split(',');
       
-             fetch(url, {method: 'PUT', body: JSON.stringify(gasto), headers: {'Content-type': 'application/json; charset=utf-8'}})
-             .then(function(respuesta)
-             {
+      let GastoApi = 
+      {
 
-                if(respuesta.ok)
-                {
+        descripcion: descripcion,
 
-                    console.log('Gasto editado correctamente');
+        valor: valor,
 
-                     cargarGastosApi();
+        fecha: fecha,
 
-                }
-                else
-                {
-
-                    console.log('Error, no se ha podido editar correctamente');
-
-                }   
-            })
-
-            .catch(errors => alert(errors));
+        etiquetas: etiquetas,
 
         }
-        else
-        {
+      
+      let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre}/${this.gasto.gastoId}/`, 
 
-            console.log('Introduzca un nombre por favor');
+      {method: 'PUT', headers:{'Content-Type': 'application/json;charset=utf-8'}, body: JSON.stringify(GastoApi)})
 
-        }
+      .then (()=> cargarTodo())
+
+      .then (console.log('Edited'));
+
     }
-}
+  }
+
+  function cargarTodo(){
+  
+    let usename = document.getElementById("nombre_usuario").value;
+  
+    let enlace = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${usename}`)
+
+    .then (response => response.json())
+
+    .then (response => {gesPresupuesto.cargarGastos(response);
+        repintar();
+    })
+  }
 
 //Botones
 
