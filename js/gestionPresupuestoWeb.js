@@ -23,7 +23,7 @@ function mostrarGastoWeb(idElemento, gasto)
     
     let divDescripcionPorGasto = document.createElement('div');
     divDescripcionPorGasto.className = "gasto-descripcion";
-    divDescripcionPorGasto.innerHTML += gasto.descricpion;
+    divDescripcionPorGasto.innerHTML += gasto.descripcion;
     divGasto.append(divDescripcionPorGasto);
 
     let divFechaPorGasto = document.createElement('div');
@@ -718,7 +718,8 @@ function EditarHandleApi(){
  
         let url = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${username}/${this.gasto.gastoId}`;
 
-        if (username != ''){
+        if (username != '')
+        {
  
             let formulario = event.currentTarget.form;
  
@@ -751,6 +752,7 @@ function EditarHandleApi(){
                 {
 
                     console.log('Gasto editado correctamente');
+
                      cargarGastosApi();
 
                 }
