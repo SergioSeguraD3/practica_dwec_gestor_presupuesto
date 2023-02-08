@@ -513,7 +513,13 @@ function EditarHandleFormulario()
         btnFormulario.setAttribute('disabled', "");
 
 
+        let editarApi = new EditarGastoAPI();
 
+        editarApi.gasto = this.gasto;
+        
+        formularios.querySelector("button.gasto-enviar-api")
+        
+        .addEventListener('click',editarApi);
         
     }
 
@@ -704,7 +710,51 @@ function cargarGastosAPI()
     
 };
 
+function EditarGastoAPI()
+{
 
+    this.handleEvent = function(event)
+    {
+
+        event.preventDefault();
+
+
+      let nombre = document.getElementById("nombre_usuario").value;
+
+      let formulario = event.currentTarget.form;
+
+      let descripcion = formulario.elements.descripcion.value;
+
+      let valor = parseFloat(formulario.elements.valor.value);
+
+      let fecha = formulario.elements.fecha.value;
+
+      let etiquetas = formulario.elements.etiquetas.value.split(',');
+      
+      let GastoApi = 
+      {
+
+        descripcion: descripcion,
+
+        valor: valor,
+
+        fecha: fecha,
+
+        etiquetas: etiquetas,
+
+        }
+      
+      let promise = fetch(`https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombre}/${this.gasto.gastoId}/`, 
+
+      {method: 'PUT', headers:{'Content-Type': 'application/json;charset=utf-8'}, body: JSON.stringify(GastoApi)})
+
+      .then (()=> cargarTodo())
+
+      .then (console.log('Editado'));
+
+    }
+
+  }
 
   function cargarTodo(){
   
@@ -771,5 +821,6 @@ export{
     cargarGastosWeb,
     cargarGastosAPI,
     borrarGastosAPI,
+    EditarGastoAPI
 
 }
