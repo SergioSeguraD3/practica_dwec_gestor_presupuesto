@@ -265,12 +265,19 @@ function repintar()
 
     }
 
-    let dia = gesPresupuesto.agruparGastos();
+    let dia = gesPresupuesto.agruparGastos("dia");
 
-    let mes = gesPresupuesto.agruparGastos();
+    mostrarGastosAgrupadosWeb("agrupacion-dia", dia, "dia");
 
-    let anyo = gesPresupuesto.agruparGastos();
 
+    let mes = gesPresupuesto.agruparGastos("mes");
+
+    mostrarGastosAgrupadosWeb("agrupacion-dia", mes, "dia");
+
+
+    let anyo = gesPresupuesto.agruparGastos("anyo");
+
+    mostrarGastosAgrupadosWeb("agrupacion-dia", anyo, "dia");
 }
 
 function actualizarPresupuestoWeb()
