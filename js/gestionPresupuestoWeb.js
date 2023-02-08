@@ -164,7 +164,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
                 let spanDatoAgrupado = document.createElement('span');
                 spanDatoAgrupado.className = "agrupacion-dato-clave";
 
-                spanDatoAgrupado.innerHTML += `${llave}`;
+                spanDatoAgrupado.innerHTML += `${llave} -  `;
 
                 let spanValorDatoAgrupado = document.createElement('span');
                 spanValorDatoAgrupado.className = "agrupacion-dato-valor";
@@ -180,7 +180,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo)
             id.append(agrupacionDiv);
 
          //   return id;
-
         
             // Estilos
             divP.style.width = "33%";
