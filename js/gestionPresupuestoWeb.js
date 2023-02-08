@@ -265,6 +265,12 @@ function repintar()
 
     }
 
+    let dia = gesPresupuesto.agruparGastos();
+
+    let mes = gesPresupuesto.agruparGastos();
+
+    let anyo = gesPresupuesto.agruparGastos();
+
 }
 
 function actualizarPresupuestoWeb()
